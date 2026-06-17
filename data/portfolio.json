@@ -1,0 +1,69 @@
+{
+  "name": "Choirul Amir Siregar",
+  "email": "irula5198@gmail.com",
+  "bio": "I am an undergraduate student in Information Technology at Muhammadiyah Yogyakarta University with a strong interest in data-related fields such as data analysis, database systems, and data-driven decision making. Although I am still developing my practical experience, I am highly motivated to learn and grow in the field of data. I am eager to contribute in real-world settings and thrive in collaborative, cross-functional, and cross-cultural teams.",
+  "education": [
+    {
+      "id": "1",
+      "institution": "Universitas Muhammadiyah Yogyakarta",
+      "degree": "Undergraduate student in Information Technology",
+      "years": "2023-Now"
+    }
+  ],
+  "organizations": [
+    {
+      "id": "1",
+      "name": "BEM KMFT UMY",
+      "role": "Staff Department of Social Affairs and Cooperation",
+      "years": "2024-Now",
+      "description": "As a staff member of the Social Affairs and Partnership Division, I was responsible for building and maintaining collaborations with both internal student organizations and external institutions. My role focused on creating meaningful partnerships that supported student development programs, community service initiatives, and public outreach events. I contributed to drafting partnership proposals, initiating communications, and ensuring successful follow-up and documentation of all collaborative activities."
+    }
+  ],
+  "certifications": [
+    {
+      "id": "1",
+      "issuer": "dicoding",
+      "title": "Microsoft Word, Excel"
+    }
+  ],
+  "skills": [
+    "SQL Server Management",
+    "GitHub",
+    "Git",
+    "Visual Studio",
+    "VS Code",
+    "Python",
+    "Canva",
+    "Word",
+    "Excel"
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "title": "SIMPRAK",
+      "description": "This project is an independently developed Practicum Management Information System (PMIS) designed to assist academic institutions in managing practical course activities efficiently. The system provides features for scheduling, student registration, assistant assignment, grading, and attendance tracking.\nThe goal of the system is to digitize and streamline the administrative workflow for laboratory or practicum-based courses, ensuring transparency and improving coordination between students, assistants, and coordinators.",
+      "image": "/projects/simprak.png",
+      "link": ""
+    },
+    {
+      "title": "New Project",
+      "description": "Project description",
+      "image": "",
+      "link": "",
+      "id": "1781727949172"
+    }
+  ],
+  "experiences": [
+    {
+      "id": "1",
+      "title": "Competition Coordinator for PORTEK",
+      "description": "I served as the Competition Coordinator for PORTEK, a major annual sports festival organized by the Faculty of Engineering. In this role, I led a team of 9 committee members in managing various aspects of the event's competitions, including scheduling, rule standardization, coordination with referees, and ensuring fair play across multiple sports branches.\nMy responsibilities included designing competition flow, managing logistics, delegating tasks efficiently, and resolving any issues during match execution. Through this experience, I honed my leadership, organizational, and crisis management skills in a high-pressure event setting with hundreds of participants."
+    }
+  ],
+  "photo": "/uploads/1781727790794_IMG_4421.JPG",
+  "links": {
+    "linkedin": "https://www.linkedin.com/in/choirul-amir-siregar-010105cas/",
+    "github": "https://github.com/Cruelasss",
+    "instagram": "https://www.instagram.com/cruel.as/"
+  }
+}
