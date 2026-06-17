@@ -15,7 +15,7 @@
       "id": "1",
       "name": "BEM KMFT UMY",
       "role": "Staff Department of Social Affairs and Cooperation",
-      "years": "2024-Now",
+      "years": "2024-2025",
       "description": "As a staff member of the Social Affairs and Partnership Division, I was responsible for building and maintaining collaborations with both internal student organizations and external institutions. My role focused on creating meaningful partnerships that supported student development programs, community service initiatives, and public outreach events. I contributed to drafting partnership proposals, initiating communications, and ensuring successful follow-up and documentation of all collaborative activities."
     }
   ],
@@ -35,7 +35,10 @@
     "Python",
     "Canva",
     "Word",
-    "Excel"
+    "Excel",
+    "XAMPP",
+    "Laragon",
+    "Docker"
   ],
   "projects": [
     {

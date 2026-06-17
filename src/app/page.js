@@ -37,17 +37,17 @@ export default async function Home() {
               <div className="flex gap-4 ml-4">
                 {data.links?.linkedin && (
                   <a href={data.links.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors font-bold text-xl">
-                    in
+                    LinkedIn
                   </a>
                 )}
                 {data.links?.instagram && (
                   <a href={data.links.instagram} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors font-bold text-xl">
-                    IG
+                    Instagram
                   </a>
                 )}
                 {data.links?.github && (
                   <a href={data.links.github} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors font-bold text-xl">
-                    GH
+                    Git Hub
                   </a>
                 )}
               </div>
