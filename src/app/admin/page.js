@@ -305,14 +305,53 @@ export default function AdminDashboard() {
                         <input type="text" value={proj.link || ""} onChange={(e) => handleArrayChange('projects', index, 'link', e.target.value)} placeholder="https://..." className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white" />
                       </div>
                       <div>
-                        <label className="block text-gray-400 mb-1">Project Image</label>
+                        <label className="block text-gray-400 mb-1">Project Images (Multiple)</label>
                         <div className="flex flex-col gap-2">
-                          {proj.image && <img src={proj.image} alt={proj.title} className="h-20 object-cover rounded-lg border border-gray-700 w-fit" />}
+                          <div className="flex flex-wrap gap-2">
+                            {(proj.images || (proj.image ? [proj.image] : [])).map((imgUrl, imgIdx) => (
+                              <div key={imgIdx} className="relative group/img">
+                                <img src={imgUrl} alt={`${proj.title}-${imgIdx}`} className="h-16 w-16 object-cover rounded-lg border border-gray-700" />
+                                <button onClick={() => {
+                                  const currentImages = proj.images || (proj.image ? [proj.image] : []);
+                                  const newImages = [...currentImages];
+                                  newImages.splice(imgIdx, 1);
+                                  handleArrayChange('projects', index, 'images', newImages);
+                                }} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover/img:opacity-100 shadow-lg"><Trash2 size={12}/></button>
+                              </div>
+                            ))}
+                          </div>
                           <input 
                             type="file" 
                             accept="image/*"
-                            onChange={(e) => handleFileUpload(e.target.files[0], (url) => handleArrayChange('projects', index, 'image', url))}
-                            className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-500 file:text-white hover:file:bg-cyan-600 text-sm"
+                            multiple
+                            onChange={async (e) => {
+                              const files = Array.from(e.target.files);
+                              const uploadedUrls = [];
+                              setSaveStatus("saving");
+                              for (const file of files) {
+                                const formData = new FormData();
+                                formData.append("file", file);
+                                try {
+                                  const res = await fetch("/api/upload", { method: "POST", body: formData });
+                                  const json = await res.json();
+                                  if (json.url) uploadedUrls.push(json.url);
+                                } catch (err) {
+                                  console.error(err);
+                                }
+                              }
+                              if (uploadedUrls.length > 0) {
+                                const currentImages = proj.images || (proj.image ? [proj.image] : []);
+                                const uniqueImages = Array.from(new Set([...currentImages, ...uploadedUrls]));
+                                handleArrayChange('projects', index, 'images', uniqueImages);
+                                setSaveStatus("success");
+                                setTimeout(() => setSaveStatus("idle"), 3000);
+                              } else {
+                                setSaveStatus("error");
+                                setTimeout(() => setSaveStatus("idle"), 3000);
+                              }
+                              e.target.value = "";
+                            }}
+                            className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-500 file:text-white hover:file:bg-cyan-600 text-sm mt-2"
                           />
                         </div>
                       </div>
@@ -320,7 +359,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
               ))}
-              <button onClick={() => addArrayItem('projects', { title: "New Project", description: "Project description", image: "", link: "" })} className="w-full border-2 border-dashed border-gray-700 text-gray-400 rounded-xl py-4 hover:border-purple-500 hover:text-purple-400 transition-colors font-bold">+ Add Project</button>
+              <button onClick={() => addArrayItem('projects', { title: "New Project", description: "Project description", images: [], link: "" })} className="w-full border-2 border-dashed border-gray-700 text-gray-400 rounded-xl py-4 hover:border-purple-500 hover:text-purple-400 transition-colors font-bold">+ Add Project</button>
             </div>
           </div>
         )}

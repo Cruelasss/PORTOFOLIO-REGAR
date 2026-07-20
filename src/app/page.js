@@ -3,6 +3,7 @@ import path from 'path';
 import { kv } from '@vercel/kv';
 import Shapes from '@/components/Shapes';
 import ContactForm from '@/components/ContactForm';
+import ProjectGallery from '@/components/ProjectGallery';
 import { Mail, ExternalLink } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -153,13 +154,9 @@ export default async function Home() {
           <div className="grid md:grid-cols-2 gap-8">
             {data.projects.map((proj, i) => (
               <div key={i} className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-gray-800 hover:border-cyan-500 transition-colors group">
-                <div className="h-48 bg-gray-800 w-full relative overflow-hidden flex items-center justify-center">
-                  {proj.image ? (
-                    <img src={proj.image} alt={proj.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  ) : (
-                    <div className="text-gray-500 font-bold">Project Image</div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent"></div>
+                <div className="h-48 bg-gray-800 w-full relative flex items-center justify-center">
+                  <ProjectGallery images={proj.images && proj.images.length > 0 ? proj.images : (proj.image ? [proj.image] : [])} title={proj.title} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent pointer-events-none"></div>
                 </div>
                 <div className="p-8 flex flex-col h-full">
                   <h3 className="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition-colors">{proj.title}</h3>
