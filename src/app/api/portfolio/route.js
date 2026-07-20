@@ -1,15 +1,36 @@
 import { NextResponse } from 'next/server';
+import { kv } from '@vercel/kv';
 import fs from 'fs';
 import path from 'path';
 
-const dataFilePath = path.join(process.cwd(), 'data', 'portfolio.json');
-
 export async function GET() {
   try {
-    const fileContents = fs.readFileSync(dataFilePath, 'utf8');
-    const data = JSON.parse(fileContents);
+    // Coba ambil dari KV
+    let data = null;
+    try {
+      data = await kv.get('portfolio_data');
+    } catch (e) {
+      console.log("KV belum di-setup atau tidak ada Env Vars.");
+    }
+    
+    // Jika kosong (baru pertama kali di-deploy) atau error KV, 
+    // ambil dari file lokal sebagai nilai awal (default)
+    if (!data) {
+      const dataFilePath = path.join(process.cwd(), 'data', 'portfolio.json');
+      const fileContents = fs.readFileSync(dataFilePath, 'utf8');
+      data = JSON.parse(fileContents);
+      
+      // Coba simpan ke KV agar selanjutnya pakai data dari KV
+      try {
+        await kv.set('portfolio_data', data);
+      } catch (e) {
+        // Abaikan jika KV belum di-setup
+      }
+    }
+    
     return NextResponse.json(data);
   } catch (error) {
+    console.error("GET Error:", error);
     return NextResponse.json({ error: 'Failed to read data' }, { status: 500 });
   }
 }
@@ -17,9 +38,21 @@ export async function GET() {
 export async function POST(request) {
   try {
     const data = await request.json();
-    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
+    
+    // Simpan ke Vercel KV
+    await kv.set('portfolio_data', data);
+    
+    // (Opsional) tetap simpan ke lokal untuk penggunaan localhost
+    try {
+      const dataFilePath = path.join(process.cwd(), 'data', 'portfolio.json');
+      fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
+    } catch (e) {
+      // Abaikan error write ini di Vercel
+    }
+    
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error("POST Error:", error);
     return NextResponse.json({ error: 'Failed to write data' }, { status: 500 });
   }
 }
