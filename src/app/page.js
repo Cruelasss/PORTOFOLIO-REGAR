@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { kv } from '@vercel/kv';
 import Shapes from '@/components/Shapes';
 import ContactForm from '@/components/ContactForm';
 import { Mail, ExternalLink } from 'lucide-react';
@@ -7,9 +8,18 @@ import { Mail, ExternalLink } from 'lucide-react';
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const dataFilePath = path.join(process.cwd(), 'data', 'portfolio.json');
-  const fileContents = fs.readFileSync(dataFilePath, 'utf8');
-  const data = JSON.parse(fileContents);
+  let data = null;
+  try {
+    data = await kv.get('portfolio_data');
+  } catch (e) {
+    console.log("KV not connected yet");
+  }
+
+  if (!data) {
+    const dataFilePath = path.join(process.cwd(), 'data', 'portfolio.json');
+    const fileContents = fs.readFileSync(dataFilePath, 'utf8');
+    data = JSON.parse(fileContents);
+  }
 
   return (
     <main className="min-h-screen relative bg-[#111111] text-white font-sans">
