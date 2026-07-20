@@ -284,6 +284,28 @@ export default function AdminDashboard() {
             </div>
 
             <h1 className="text-3xl font-bold flex items-center gap-3 pt-8">
+              <Briefcase /> Experiences
+            </h1>
+            <div className="space-y-4">
+              {(data.experiences || []).map((exp, index) => (
+                <div key={exp.id || index} className="bg-[#1a1a1a] border border-gray-800 rounded-2xl p-6 relative group">
+                  <button onClick={() => removeArrayItem('experiences', index)} className="absolute top-4 right-4 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={20} /></button>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-gray-400 mb-1">Job / Role Title</label>
+                      <input type="text" value={exp.title} onChange={(e) => handleArrayChange('experiences', index, 'title', e.target.value)} className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white" />
+                    </div>
+                    <div>
+                      <label className="block text-gray-400 mb-1">Description</label>
+                      <textarea rows={4} value={exp.description} onChange={(e) => handleArrayChange('experiences', index, 'description', e.target.value)} className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white resize-none" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <button onClick={() => addArrayItem('experiences', { title: "New Experience", description: "Experience description" })} className="w-full border-2 border-dashed border-gray-700 text-gray-400 rounded-xl py-4 hover:border-purple-500 hover:text-purple-400 transition-colors font-bold">+ Add Experience</button>
+            </div>
+
+            <h1 className="text-3xl font-bold flex items-center gap-3 pt-8">
               <Briefcase /> Projects
             </h1>
             <div className="space-y-4">
