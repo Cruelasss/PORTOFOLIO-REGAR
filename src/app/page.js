@@ -21,7 +21,7 @@ export default async function Home() {
         <section className="flex flex-col md:flex-row items-center gap-12 pt-10">
           <div className="flex-1 space-y-6">
             <div className="inline-block border border-gray-600 rounded-full px-6 py-2 text-sm tracking-widest mb-4">
-              2025
+              2026
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               Hello ! <br/>
