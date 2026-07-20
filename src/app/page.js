@@ -6,6 +6,8 @@ import ContactForm from '@/components/ContactForm';
 import { Mail, ExternalLink } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 export default async function Home() {
   let data = null;
