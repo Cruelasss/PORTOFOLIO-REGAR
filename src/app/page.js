@@ -153,24 +153,39 @@ export default async function Home() {
           
           <div className="grid md:grid-cols-2 gap-8">
             {data.projects.map((proj, i) => {
-              const projectLink = proj.link || (proj.title?.toUpperCase().includes('TEKKOMDIK') || proj.title?.toUpperCase().includes('SIMPRAK') ? 'https://tekkomdik-intern.vercel.app/' : null);
+              const projectLink = proj.link || (proj.title?.toUpperCase().includes('TEKKOMDIK') || proj.title?.toUpperCase().includes('SIMPRAK') ? 'https://tekkomdik-intern.vercel.app/' : 'https://tekkomdik-intern.vercel.app/');
               return (
-                <div key={i} className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-gray-800 hover:border-cyan-500 transition-colors group">
-                  <div className="h-48 bg-gray-800 w-full relative flex items-center justify-center">
-                    <ProjectGallery images={proj.images && proj.images.length > 0 ? proj.images : (proj.image ? [proj.image] : [])} title={proj.title} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent pointer-events-none"></div>
-                  </div>
-                  <div className="p-8 flex flex-col h-full">
-                    <h3 className="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition-colors">{proj.title}</h3>
-                    <p className="text-gray-400 whitespace-pre-line mb-8">{proj.description}</p>
-                    {projectLink && (
-                      <div className="mt-auto pt-4">
-                        <a href={projectLink} target="_blank" rel="noopener noreferrer" className="inline-flex bg-yellow-500 text-black font-bold px-6 py-3 rounded-full items-center gap-2 hover:scale-105 transition-transform shadow-lg">
-                          CLICK HERE <ExternalLink size={16} />
-                        </a>
+                <div key={i} className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-gray-800 hover:border-cyan-500 transition-colors group flex flex-col justify-between">
+                  <div>
+                    <div className="h-48 bg-gray-800 w-full relative flex items-center justify-center">
+                      <ProjectGallery images={proj.images && proj.images.length > 0 ? proj.images : (proj.image ? [proj.image] : [])} title={proj.title} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent pointer-events-none"></div>
+                    </div>
+                    <div className="p-8">
+                      <div className="flex items-center justify-between gap-4 mb-4">
+                        <h3 className="text-2xl font-bold group-hover:text-cyan-400 transition-colors">{proj.title}</h3>
+                        {projectLink && (
+                          <a href={projectLink} target="_blank" rel="noopener noreferrer" className="text-yellow-400 hover:text-yellow-300 p-2 rounded-lg bg-yellow-400/10 hover:bg-yellow-400/20 transition-colors" title="Open Project Link">
+                            <ExternalLink size={20} />
+                          </a>
+                        )}
                       </div>
-                    )}
+                      <p className="text-gray-400 whitespace-pre-line leading-relaxed">{proj.description}</p>
+                    </div>
                   </div>
+                  
+                  {projectLink && (
+                    <div className="p-8 pt-0">
+                      <a 
+                        href={projectLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black font-extrabold py-3 px-6 rounded-xl flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] shadow-lg text-lg uppercase tracking-wider"
+                      >
+                        🚀 VISIT PROJECT LINK <ExternalLink size={20} />
+                      </a>
+                    </div>
+                  )}
                 </div>
               );
             })}
