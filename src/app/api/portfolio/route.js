@@ -44,14 +44,18 @@ export async function POST(request) {
     const data = await request.json();
     
     // Simpan ke Vercel KV
-    await kv.set('portfolio_data', data);
+    try {
+      await kv.set('portfolio_data', data);
+    } catch (e) {
+      console.log("Gagal menyimpan ke KV (mungkin belum di-setup). Error:", e.message);
+    }
     
-    // (Opsional) tetap simpan ke lokal untuk penggunaan localhost
+    // Tetap simpan ke lokal untuk penggunaan localhost
     try {
       const dataFilePath = path.join(process.cwd(), 'data', 'portfolio.json');
       fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
     } catch (e) {
-      // Abaikan error write ini di Vercel
+      // Abaikan error write ini di Vercel (karena read-only)
     }
     
     return NextResponse.json({ success: true });
