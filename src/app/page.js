@@ -4,7 +4,7 @@ import { kv } from '@vercel/kv';
 import Shapes from '@/components/Shapes';
 import ContactForm from '@/components/ContactForm';
 import ProjectGallery from '@/components/ProjectGallery';
-import { Mail, ExternalLink } from 'lucide-react';
+import { Mail, ExternalLink, Linkedin, Instagram, Github } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -49,18 +49,18 @@ export default async function Home() {
               </a>
               <div className="flex gap-4 ml-4">
                 {data.links?.linkedin && (
-                  <a href={data.links.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors font-bold text-xl">
-                    LinkedIn
+                  <a href={data.links.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors text-white" title="LinkedIn">
+                    <Linkedin size={22} />
                   </a>
                 )}
                 {data.links?.instagram && (
-                  <a href={data.links.instagram} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors font-bold text-xl">
-                    Instagram
+                  <a href={data.links.instagram} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors text-white" title="Instagram">
+                    <Instagram size={22} />
                   </a>
                 )}
                 {data.links?.github && (
-                  <a href={data.links.github} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors font-bold text-xl">
-                    Git Hub
+                  <a href={data.links.github} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors text-white" title="GitHub">
+                    <Github size={22} />
                   </a>
                 )}
               </div>
