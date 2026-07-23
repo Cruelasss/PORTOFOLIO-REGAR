@@ -182,7 +182,7 @@ export default async function Home() {
                         rel="noopener noreferrer" 
                         className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black font-extrabold py-3 px-6 rounded-xl flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] shadow-lg text-lg uppercase tracking-wider"
                       >
-                        🚀 VISIT PROJECT LINK <ExternalLink size={20} />
+                        PROJECT LINK <ExternalLink size={20} />
                       </a>
                     </div>
                   )}
