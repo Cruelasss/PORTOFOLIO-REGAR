@@ -4,7 +4,8 @@ import { kv } from '@vercel/kv';
 import Shapes from '@/components/Shapes';
 import ContactForm from '@/components/ContactForm';
 import ProjectGallery from '@/components/ProjectGallery';
-import { Mail, ExternalLink, Linkedin, Instagram, Github } from 'lucide-react';
+import { Mail, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Instagram } from '@/components/SocialIcons';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
