@@ -38,7 +38,7 @@ export default async function Home() {
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               Hello ! <br/>
-              I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">{data.name}</span>
+              I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">{data.name}</span>
             </h1>
             <p className="text-gray-400 text-lg leading-relaxed max-w-2xl">
               {data.bio}
