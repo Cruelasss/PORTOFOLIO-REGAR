@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Save, MessageSquare, Briefcase, User, Settings, LayoutDashboard, Trash2 } from "lucide-react";
+import { Save, MessageSquare, Briefcase, User, Settings, LayoutDashboard, Trash2, ImagePlus, Link as LinkIcon } from "lucide-react";
 
 export default function AdminDashboard() {
   const [password, setPassword] = useState("");
@@ -299,10 +299,23 @@ export default function AdminDashboard() {
                       <label className="block text-gray-400 mb-1">Description</label>
                       <textarea rows={4} value={exp.description} onChange={(e) => handleArrayChange('experiences', index, 'description', e.target.value)} className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white resize-none" />
                     </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-gray-400 mb-1"><LinkIcon size={14} className="inline mr-1" />Experience Link / URL</label>
+                        <input type="text" value={exp.link || ""} onChange={(e) => handleArrayChange('experiences', index, 'link', e.target.value)} placeholder="https://..." className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white" />
+                      </div>
+                      <div>
+                        <label className="block text-gray-400 mb-1"><ImagePlus size={14} className="inline mr-1" />Experience Image (Paste URL)</label>
+                        <div className="flex gap-2">
+                          <input type="text" value={exp.image || ""} onChange={(e) => handleArrayChange('experiences', index, 'image', e.target.value)} placeholder="Paste image URL here..." className="flex-1 bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white text-sm" />
+                        </div>
+                        {exp.image && <img src={exp.image} alt="preview" className="mt-2 h-20 rounded-lg border border-gray-700 object-cover" />}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
-              <button onClick={() => addArrayItem('experiences', { title: "New Experience", description: "Experience description" })} className="w-full border-2 border-dashed border-gray-700 text-gray-400 rounded-xl py-4 hover:border-purple-500 hover:text-purple-400 transition-colors font-bold">+ Add Experience</button>
+              <button onClick={() => addArrayItem('experiences', { title: "New Experience", description: "Experience description", image: "", link: "" })} className="w-full border-2 border-dashed border-gray-700 text-gray-400 rounded-xl py-4 hover:border-purple-500 hover:text-purple-400 transition-colors font-bold">+ Add Experience</button>
             </div>
 
             <h1 className="text-3xl font-bold flex items-center gap-3 pt-8">
@@ -321,14 +334,15 @@ export default function AdminDashboard() {
                       <label className="block text-gray-400 mb-1">Description</label>
                       <textarea rows={4} value={proj.description} onChange={(e) => handleArrayChange('projects', index, 'description', e.target.value)} className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white resize-none" />
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-4">
                       <div>
-                        <label className="block text-gray-400 mb-1">Project Link / URL</label>
+                        <label className="block text-gray-400 mb-1"><LinkIcon size={14} className="inline mr-1" />Project Link / URL</label>
                         <input type="text" value={proj.link || ""} onChange={(e) => handleArrayChange('projects', index, 'link', e.target.value)} placeholder="https://..." className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white" />
                       </div>
                       <div>
-                        <label className="block text-gray-400 mb-1">Project Images (Multiple)</label>
-                        <div className="flex flex-col gap-2">
+                        <label className="block text-gray-400 mb-1"><ImagePlus size={14} className="inline mr-1" />Project Images</label>
+                        <div className="flex flex-col gap-3">
+                          {/* Preview gambar yang sudah ada */}
                           <div className="flex flex-wrap gap-2">
                             {(proj.images || (proj.image ? [proj.image] : [])).map((imgUrl, imgIdx) => (
                               <div key={imgIdx} className="relative group/img">
@@ -342,39 +356,71 @@ export default function AdminDashboard() {
                               </div>
                             ))}
                           </div>
-                          <input 
-                            type="file" 
-                            accept="image/*"
-                            multiple
-                            onChange={async (e) => {
-                              const files = Array.from(e.target.files);
-                              const uploadedUrls = [];
-                              setSaveStatus("saving");
-                              for (const file of files) {
-                                const formData = new FormData();
-                                formData.append("file", file);
-                                try {
-                                  const res = await fetch("/api/upload", { method: "POST", body: formData });
-                                  const json = await res.json();
-                                  if (json.url) uploadedUrls.push(json.url);
-                                } catch (err) {
-                                  console.error(err);
+
+                          {/* Opsi 1: Paste URL gambar (SELALU BISA) */}
+                          <div className="bg-[#191919] border border-gray-700 rounded-lg p-3">
+                            <p className="text-xs text-green-400 font-bold mb-2">✅ Paste Image URL (Recommended)</p>
+                            <div className="flex gap-2">
+                              <input 
+                                type="text" 
+                                id={`img-url-${index}`}
+                                placeholder="Paste image URL here (e.g. from Google Drive, Imgur, etc.)"
+                                className="flex-1 bg-[#222] border border-gray-700 rounded-lg px-3 py-2 text-white text-sm"
+                              />
+                              <button 
+                                type="button"
+                                onClick={() => {
+                                  const input = document.getElementById(`img-url-${index}`);
+                                  const url = input.value.trim();
+                                  if (url) {
+                                    const currentImages = proj.images || (proj.image ? [proj.image] : []);
+                                    handleArrayChange('projects', index, 'images', [...currentImages, url]);
+                                    input.value = '';
+                                  }
+                                }}
+                                className="bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-2 rounded-lg text-sm transition-colors"
+                              >Add</button>
+                            </div>
+                          </div>
+
+                          {/* Opsi 2: Upload file (hanya bisa di Vercel dengan Blob) */}
+                          <div className="bg-[#191919] border border-gray-700 rounded-lg p-3">
+                            <p className="text-xs text-gray-500 mb-2">📁 Or Upload File (requires Vercel Blob)</p>
+                            <input 
+                              type="file" 
+                              accept="image/*"
+                              multiple
+                              onChange={async (e) => {
+                                const files = Array.from(e.target.files);
+                                const uploadedUrls = [];
+                                setSaveStatus("saving");
+                                for (const file of files) {
+                                  const formData = new FormData();
+                                  formData.append("file", file);
+                                  try {
+                                    const res = await fetch("/api/upload", { method: "POST", body: formData });
+                                    const json = await res.json();
+                                    if (json.url) uploadedUrls.push(json.url);
+                                    else { alert("Upload gagal: " + (json.error || 'Unknown error')); }
+                                  } catch (err) {
+                                    console.error(err);
+                                    alert("Upload error: " + err.message);
+                                  }
                                 }
-                              }
-                              if (uploadedUrls.length > 0) {
-                                const currentImages = proj.images || (proj.image ? [proj.image] : []);
-                                const uniqueImages = Array.from(new Set([...currentImages, ...uploadedUrls]));
-                                handleArrayChange('projects', index, 'images', uniqueImages);
-                                setSaveStatus("success");
+                                if (uploadedUrls.length > 0) {
+                                  const currentImages = proj.images || (proj.image ? [proj.image] : []);
+                                  const uniqueImages = Array.from(new Set([...currentImages, ...uploadedUrls]));
+                                  handleArrayChange('projects', index, 'images', uniqueImages);
+                                  setSaveStatus("success");
+                                } else {
+                                  setSaveStatus("error");
+                                }
                                 setTimeout(() => setSaveStatus("idle"), 3000);
-                              } else {
-                                setSaveStatus("error");
-                                setTimeout(() => setSaveStatus("idle"), 3000);
-                              }
-                              e.target.value = "";
-                            }}
-                            className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-500 file:text-white hover:file:bg-cyan-600 text-sm mt-2"
-                          />
+                                e.target.value = "";
+                              }}
+                              className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-500 file:text-white hover:file:bg-cyan-600 text-sm"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -181,11 +181,26 @@ export default async function Home() {
           </div>
           
           <div className="grid gap-8">
-            {data.experiences.map((exp, i) => (
-              <div key={i} className="bg-[#1a1a1a] rounded-2xl p-8 border border-gray-800 hover:border-purple-500 transition-colors relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full -z-10"></div>
-                <h3 className="text-2xl font-bold mb-4">{exp.title}</h3>
-                <p className="text-gray-400 whitespace-pre-line text-lg leading-relaxed">{exp.description}</p>
+            {(data.experiences || []).map((exp, i) => (
+              <div key={i} className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-gray-800 hover:border-purple-500 transition-colors relative">
+                {exp.image && (
+                  <div className="h-48 w-full relative">
+                    <img src={exp.image} alt={exp.title} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent pointer-events-none"></div>
+                  </div>
+                )}
+                <div className="p-8">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full -z-10"></div>
+                  <h3 className="text-2xl font-bold mb-4">{exp.title}</h3>
+                  <p className="text-gray-400 whitespace-pre-line text-lg leading-relaxed">{exp.description}</p>
+                  {exp.link && (
+                    <div className="mt-6">
+                      <a href={exp.link} target="_blank" rel="noopener noreferrer" className="inline-flex bg-purple-500 text-white font-bold px-6 py-2 rounded-full items-center gap-2 hover:scale-105 transition-transform">
+                        VIEW MORE <ExternalLink size={16} />
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
