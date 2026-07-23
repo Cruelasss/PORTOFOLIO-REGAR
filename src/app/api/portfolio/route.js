@@ -42,12 +42,16 @@ export async function GET() {
 export async function POST(request) {
   try {
     const data = await request.json();
+    let kvSaved = false;
+    let kvError = null;
     
     // Simpan ke Vercel KV
     try {
       await kv.set('portfolio_data', data);
+      kvSaved = true;
     } catch (e) {
-      console.log("Gagal menyimpan ke KV (mungkin belum di-setup). Error:", e.message);
+      console.log("Gagal menyimpan ke KV. Error:", e.message);
+      kvError = e.message;
     }
     
     // Tetap simpan ke lokal untuk penggunaan localhost
@@ -56,6 +60,10 @@ export async function POST(request) {
       fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
     } catch (e) {
       // Abaikan error write ini di Vercel (karena read-only)
+    }
+    
+    if (!kvSaved && process.env.NODE_ENV === 'production') {
+      return NextResponse.json({ success: false, error: "Gagal menyimpan ke Database (KV Error: " + kvError + "). Mohon pastikan Vercel KV / Redis tersambung." }, { status: 500 });
     }
     
     return NextResponse.json({ success: true });
