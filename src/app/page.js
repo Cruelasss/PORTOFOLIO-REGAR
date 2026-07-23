@@ -131,15 +131,32 @@ export default async function Home() {
               <div className="w-4 h-4 rounded-full bg-white border border-black/20"></div>
               <div className="w-4 h-4 rounded-full bg-white border border-black/20"></div>
             </div>
-            <div className="p-8 text-center space-y-8">
-              <h3 className="font-bold text-xl text-blue-900 border-b-2 border-blue-900 inline-block uppercase">Skills and Tools</h3>
-              <div className="flex flex-wrap justify-center gap-4">
-                {data.skills.map((skill, i) => (
-                  <div key={i} className="bg-gray-100 px-6 py-3 rounded-xl font-bold text-gray-800 shadow-sm border border-gray-200 flex items-center gap-2">
-                    {skill}
-                  </div>
-                ))}
+            <div className="p-8 space-y-10">
+              
+              {/* Skillset */}
+              <div className="text-center space-y-4">
+                <h3 className="font-bold text-xl text-blue-900 border-b-2 border-blue-900 inline-block uppercase tracking-wider">Skillset</h3>
+                <div className="flex flex-wrap justify-center gap-3 pt-2">
+                  {(data.skills || []).map((skill, i) => (
+                    <div key={i} className="bg-purple-50 text-purple-900 px-5 py-2.5 rounded-xl font-semibold shadow-sm border border-purple-200 text-sm hover:scale-105 transition-transform">
+                      🧠 {skill}
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              {/* Toolset */}
+              <div className="text-center space-y-4 pt-4 border-t border-gray-200">
+                <h3 className="font-bold text-xl text-purple-900 border-b-2 border-purple-900 inline-block uppercase tracking-wider">Toolset</h3>
+                <div className="flex flex-wrap justify-center gap-3 pt-2">
+                  {(data.tools || ["Node.js", "Express.js", "React.js", "MySQL", "SQL Server Management Studio (SSMS)", "Git", "GitHub", "Docker", "Docker Compose", "Microsoft Excel", "Microsoft Word", "Amazon Bedrock", "Postman", "Visual Studio Code", "Draw.io", "Canva", "XAMPP", "Laravel", "Android Studio"]).map((tool, i) => (
+                    <div key={i} className="bg-cyan-50 text-cyan-900 px-5 py-2.5 rounded-xl font-semibold shadow-sm border border-cyan-200 text-sm hover:scale-105 transition-transform">
+                      🛠️ {tool}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
 

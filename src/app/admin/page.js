@@ -243,15 +243,30 @@ export default function AdminDashboard() {
             </div>
 
             <h1 className="text-3xl font-bold flex items-center gap-3 pt-8">
-              <Briefcase /> Skills (Comma separated)
+              <Briefcase /> Skillset (Comma separated)
             </h1>
             <div className="bg-[#1a1a1a] border border-gray-800 rounded-2xl p-6">
               <textarea 
                 rows={3}
-                value={data.skills.join(", ")}
+                value={(data.skills || []).join(", ")}
                 onChange={(e) => {
                   const newSkills = e.target.value.split(",").map(s => s.trim()).filter(s => s);
                   handleChange('skills', newSkills);
+                }}
+                className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white resize-none"
+              />
+            </div>
+
+            <h1 className="text-3xl font-bold flex items-center gap-3 pt-8">
+              <Briefcase /> Toolset (Comma separated)
+            </h1>
+            <div className="bg-[#1a1a1a] border border-gray-800 rounded-2xl p-6">
+              <textarea 
+                rows={3}
+                value={(data.tools || ["Node.js", "Express.js", "React.js", "MySQL", "SQL Server Management Studio (SSMS)", "Git", "GitHub", "Docker", "Docker Compose", "Microsoft Excel", "Microsoft Word", "Amazon Bedrock", "Postman", "Visual Studio Code", "Draw.io", "Canva", "XAMPP", "Laravel", "Android Studio"]).join(", ")}
+                onChange={(e) => {
+                  const newTools = e.target.value.split(",").map(s => s.trim()).filter(s => s);
+                  handleChange('tools', newTools);
                 }}
                 className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white resize-none"
               />

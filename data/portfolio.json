@@ -1,7 +1,7 @@
 {
   "name": "Choirul Amir Siregar",
   "email": "irula5198@gmail.com",
-  "bio": "I am an undergraduate student in Information Technology at Muhammadiyah Yogyakarta University with a strong interest in data-related fields such as data analysis, database systems, and data-driven decision making. Although I am still developing my practical experience, I am highly motivated to learn and grow in the field of data. I am eager to contribute in real-world settings and thrive in collaborative, cross-functional, and cross-cultural teams.",
+  "bio": "I am an undergraduate Information Technology student at Muhammadiyah Yogyakarta University with a strong interest in data analytics, database systems, backend development, and data-driven decision making. Through academic projects, professional certifications, and an internship as a Backend Developer, I have developed practical experience in building web applications, designing databases, and developing RESTful APIs. I am passionate about continuously expanding my technical expertise and eager to contribute to innovative, data-driven solutions while collaborating effectively in diverse and cross-functional teams.",
   "education": [
     {
       "id": "1",
@@ -27,18 +27,43 @@
     }
   ],
   "skills": [
-    "SQL Server Management",
-    "GitHub",
+    "Analytical thinking",
+    "Problem solving",
+    "Data analysis",
+    "Database design",
+    "Backend development",
+    "RESTful API development",
+    "System integration",
+    "Critical thinking",
+    "Teamwork",
+    "Leadership",
+    "Communication",
+    "Presentation",
+    "Project management",
+    "Organizational skills",
+    "Time management",
+    "Adaptability"
+  ],
+  "tools": [
+    "Node.js",
+    "Express.js",
+    "React.js",
+    "MySQL",
+    "SQL Server Management Studio (SSMS)",
     "Git",
-    "Visual Studio",
-    "VS Code",
-    "Python",
+    "GitHub",
+    "Docker",
+    "Docker Compose",
+    "Microsoft Excel",
+    "Microsoft Word",
+    "Amazon Bedrock",
+    "Postman",
+    "Visual Studio Code",
+    "Draw.io",
     "Canva",
-    "Word",
-    "Excel",
     "XAMPP",
-    "Laragon",
-    "Docker"
+    "Laravel",
+    "Android Studio"
   ],
   "projects": [
     {
