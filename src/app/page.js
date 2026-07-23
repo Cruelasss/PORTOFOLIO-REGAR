@@ -152,25 +152,28 @@ export default async function Home() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
-            {data.projects.map((proj, i) => (
-              <div key={i} className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-gray-800 hover:border-cyan-500 transition-colors group">
-                <div className="h-48 bg-gray-800 w-full relative flex items-center justify-center">
-                  <ProjectGallery images={proj.images && proj.images.length > 0 ? proj.images : (proj.image ? [proj.image] : [])} title={proj.title} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent pointer-events-none"></div>
+            {data.projects.map((proj, i) => {
+              const projectLink = proj.link || (proj.title?.toUpperCase().includes('TEKKOMDIK') || proj.title?.toUpperCase().includes('SIMPRAK') ? 'https://tekkomdik-intern.vercel.app/' : null);
+              return (
+                <div key={i} className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-gray-800 hover:border-cyan-500 transition-colors group">
+                  <div className="h-48 bg-gray-800 w-full relative flex items-center justify-center">
+                    <ProjectGallery images={proj.images && proj.images.length > 0 ? proj.images : (proj.image ? [proj.image] : [])} title={proj.title} />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent pointer-events-none"></div>
+                  </div>
+                  <div className="p-8 flex flex-col h-full">
+                    <h3 className="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition-colors">{proj.title}</h3>
+                    <p className="text-gray-400 whitespace-pre-line mb-8">{proj.description}</p>
+                    {projectLink && (
+                      <div className="mt-auto pt-4">
+                        <a href={projectLink} target="_blank" rel="noopener noreferrer" className="inline-flex bg-yellow-500 text-black font-bold px-6 py-3 rounded-full items-center gap-2 hover:scale-105 transition-transform shadow-lg">
+                          CLICK HERE <ExternalLink size={16} />
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="p-8 flex flex-col h-full">
-                  <h3 className="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition-colors">{proj.title}</h3>
-                  <p className="text-gray-400 whitespace-pre-line mb-8">{proj.description}</p>
-                  {proj.link && (
-                    <div className="mt-auto">
-                      <a href={proj.link} target="_blank" rel="noopener noreferrer" className="inline-flex bg-yellow-500 text-black font-bold px-6 py-2 rounded-full items-center gap-2 hover:scale-105 transition-transform">
-                        CLICK HERE <ExternalLink size={16} />
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
