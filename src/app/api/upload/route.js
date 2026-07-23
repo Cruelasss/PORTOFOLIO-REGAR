@@ -3,11 +3,10 @@ import { put } from "@vercel/blob";
 
 export async function POST(request) {
   try {
-    // Cek apakah token ada
-    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    const token = process.env.UPLOAD_TOKEN || process.env.BLOB_READ_WRITE_TOKEN;
     if (!token) {
       return NextResponse.json({ 
-        error: "BLOB_READ_WRITE_TOKEN tidak ditemukan di Environment Variables! Pastikan Blob Store sudah tersambung dengan benar dan sudah di-Redeploy." 
+        error: "BLOB token tidak ditemukan di Environment Variables!" 
       }, { status: 500 });
     }
 
@@ -18,13 +17,24 @@ export async function POST(request) {
       return NextResponse.json({ error: "No file received" }, { status: 400 });
     }
 
-    // Upload file ke Vercel Blob
-    const blob = await put(file.name, file, {
-      access: 'public',
-      token: token,
-    });
+    // Coba upload sebagai public dulu, kalau gagal coba private
+    let blob;
+    try {
+      blob = await put(file.name, file, {
+        access: 'public',
+        token: token,
+      });
+    } catch (publicError) {
+      // Jika store private, upload sebagai private
+      blob = await put(file.name, file, {
+        access: 'private',
+        token: token,
+      });
+    }
 
-    return NextResponse.json({ url: blob.url });
+    // Gunakan downloadUrl jika tersedia, fallback ke url
+    const imageUrl = blob.downloadUrl || blob.url;
+    return NextResponse.json({ url: imageUrl });
   } catch (error) {
     console.error("Upload error detail:", error);
     return NextResponse.json({ 
