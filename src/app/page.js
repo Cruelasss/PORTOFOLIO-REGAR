@@ -208,6 +208,16 @@ export default async function Home() {
                         )}
                       </div>
                       <p className="text-gray-400 whitespace-pre-line leading-relaxed">{proj.description}</p>
+                      
+                      {proj.tools && proj.tools.length > 0 && (
+                        <div className="mt-6 flex flex-wrap gap-2">
+                          {proj.tools.map((tool, tIdx) => (
+                            <span key={tIdx} className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+                              {tool}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                   

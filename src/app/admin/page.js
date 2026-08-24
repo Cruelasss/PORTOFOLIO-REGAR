@@ -426,6 +426,13 @@ export default function AdminDashboard() {
                       <label className="block text-gray-400 mb-1">Description</label>
                       <textarea rows={4} value={proj.description} onChange={(e) => handleArrayChange('projects', index, 'description', e.target.value)} className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white resize-none" />
                     </div>
+                    <div>
+                      <label className="block text-gray-400 mb-1">Tools Used (Comma separated)</label>
+                      <input type="text" value={(proj.tools || []).join(", ")} onChange={(e) => {
+                          const newTools = e.target.value.split(",").map(s => s.trim()).filter(s => s);
+                          handleArrayChange('projects', index, 'tools', newTools);
+                        }} placeholder="e.g. React, Node.js, MySQL" className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white" />
+                    </div>
                     <div className="space-y-4">
                       <div>
                         <label className="block text-gray-400 mb-1"><LinkIcon size={14} className="inline mr-1" />Project Link / URL</label>
