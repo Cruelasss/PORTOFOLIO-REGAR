@@ -438,6 +438,61 @@ export default function AdminDashboard() {
                         <label className="block text-gray-400 mb-1"><LinkIcon size={14} className="inline mr-1" />Project Link / URL</label>
                         <input type="text" value={proj.link || ""} onChange={(e) => handleArrayChange('projects', index, 'link', e.target.value)} placeholder="https://..." className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white" />
                       </div>
+                      
+                      {/* KEY FEATURES SECTION */}
+                      <div className="bg-[#191919] border border-gray-700 rounded-lg p-4 space-y-3">
+                        <label className="block text-cyan-400 font-bold mb-2 flex items-center gap-2">
+                           Key Features
+                        </label>
+                        {(proj.features || []).map((feature, fIdx) => (
+                          <div key={fIdx} className="relative group/feat bg-[#222] border border-gray-600 rounded-lg p-3">
+                            <button 
+                              type="button"
+                              onClick={() => {
+                                const newFeatures = [...(proj.features || [])];
+                                newFeatures.splice(fIdx, 1);
+                                handleArrayChange('projects', index, 'features', newFeatures);
+                              }} 
+                              className="absolute top-2 right-2 text-red-500 opacity-0 group-hover/feat:opacity-100 transition-opacity"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                            <input 
+                              type="text" 
+                              value={feature.title} 
+                              onChange={(e) => {
+                                const newFeatures = [...(proj.features || [])];
+                                newFeatures[fIdx] = { ...newFeatures[fIdx], title: e.target.value };
+                                handleArrayChange('projects', index, 'features', newFeatures);
+                              }}
+                              placeholder="Feature Title (e.g. Online Application Portal)"
+                              className="w-full bg-[#111] border border-gray-700 rounded-lg px-3 py-2 text-white text-sm mb-2"
+                            />
+                            <textarea 
+                              rows={2}
+                              value={feature.description}
+                              onChange={(e) => {
+                                const newFeatures = [...(proj.features || [])];
+                                newFeatures[fIdx] = { ...newFeatures[fIdx], description: e.target.value };
+                                handleArrayChange('projects', index, 'features', newFeatures);
+                              }}
+                              placeholder="Feature Description"
+                              className="w-full bg-[#111] border border-gray-700 rounded-lg px-3 py-2 text-white text-sm resize-none"
+                            />
+                          </div>
+                        ))}
+                        <button 
+                          type="button"
+                          onClick={() => {
+                            const newFeatures = [...(proj.features || []), { title: "", description: "" }];
+                            handleArrayChange('projects', index, 'features', newFeatures);
+                          }}
+                          className="w-full border-2 border-dashed border-gray-600 text-gray-400 rounded-lg py-2 hover:border-cyan-500 hover:text-cyan-400 transition-colors text-sm font-bold"
+                        >
+                          + Add Feature
+                        </button>
+                      </div>
+
                       <div>
                         <label className="block text-gray-400 mb-1"><ImagePlus size={14} className="inline mr-1" />Project Images</label>
                         <div className="flex flex-col gap-3">

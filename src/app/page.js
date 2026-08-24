@@ -4,7 +4,7 @@ import { kv } from '@vercel/kv';
 import Shapes from '@/components/Shapes';
 import ContactForm from '@/components/ContactForm';
 import ProjectGallery from '@/components/ProjectGallery';
-import { Mail, ExternalLink } from 'lucide-react';
+import { Mail, ExternalLink, Star } from 'lucide-react';
 import { Github, Linkedin, Instagram } from '@/components/SocialIcons';
 
 const skillIcons = {
@@ -208,6 +208,22 @@ export default async function Home() {
                         )}
                       </div>
                       <p className="text-gray-400 whitespace-pre-line leading-relaxed">{proj.description}</p>
+                      
+                      {proj.features && proj.features.length > 0 && (
+                        <div className="mt-8">
+                          <h4 className="text-sm font-bold text-gray-300 mb-3 flex items-center gap-2 uppercase tracking-widest">
+                            <Star size={14} className="text-yellow-400" /> Key Features
+                          </h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {proj.features.map((feature, fIdx) => (
+                              <div key={fIdx} className="bg-[#222]/50 border border-gray-700/50 p-4 rounded-xl hover:bg-[#222] hover:border-cyan-500/50 transition-all group/feature">
+                                <h5 className="font-bold text-cyan-400 text-sm mb-1 group-hover/feature:text-cyan-300">{feature.title}</h5>
+                                <p className="text-gray-400 text-xs leading-relaxed">{feature.description}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       
                       {proj.tools && proj.tools.length > 0 && (
                         <div className="mt-6 flex flex-wrap gap-2">

@@ -71,14 +71,36 @@
       "title": "SIMPRAK",
       "description": "This project is an independently developed Practicum Management Information System (PMIS) designed to assist academic institutions in managing practical course activities efficiently. The system provides features for scheduling, student registration, assistant assignment, grading, and attendance tracking.\nThe goal of the system is to digitize and streamline the administrative workflow for laboratory or practicum-based courses, ensuring transparency and improving coordination between students, assistants, and coordinators.",
       "image": "/projects/simprak.png",
-      "link": "https://tekkomdik-intern.vercel.app/"
+      "link": ""
     },
     {
-      "title": "New Project",
-      "description": "Project description",
+      "id": "1781727949172",
+      "title": "TEKKOMDIK INTERN",
+      "description": "Internship management application.",
+      "features": [
+        {
+          "title": "Online Application Portal",
+          "description": "Paperless registration with direct CV and document uploads."
+        },
+        {
+          "title": "Cloud File Storage",
+          "description": "Secure document and photo handling powered by Cloudinary."
+        },
+        {
+          "title": "Admin & Mentor Dashboard",
+          "description": "Streamlined applicant screening, mentor workload allocation, and real-time activity oversight."
+        },
+        {
+          "title": "Daily Logbook Tracking",
+          "description": "Verified activity submission with photo and location evidence."
+        },
+        {
+          "title": "Automated Status Lifecycle",
+          "description": "Automatic updates for active, pending, and completed internship periods."
+        }
+      ],
       "image": "",
-      "link": "",
-      "id": "1781727949172"
+      "link": "https://tekkomdik-intern.vercel.app/"
     }
   ],
   "experiences": [
