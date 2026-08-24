@@ -320,25 +320,88 @@ export default function AdminDashboard() {
                         <input type="text" value={exp.link || ""} onChange={(e) => handleArrayChange('experiences', index, 'link', e.target.value)} placeholder="https://..." className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white" />
                       </div>
                       <div>
-                        <label className="block text-gray-400 mb-1"><ImagePlus size={14} className="inline mr-1" />Experience Image</label>
-                        
-                        <div className="bg-[#191919] border border-gray-700 rounded-lg p-3 space-y-3">
-                          <div>
-                            <p className="text-xs text-green-400 font-bold mb-2">✅ Paste Image URL</p>
-                            <input type="text" value={exp.image || ""} onChange={(e) => handleArrayChange('experiences', index, 'image', e.target.value)} placeholder="Paste image URL here..." className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white text-sm" />
+                        <label className="block text-gray-400 mb-1"><ImagePlus size={14} className="inline mr-1" />Experience Images</label>
+                        <div className="flex flex-col gap-3">
+                          {/* Preview gambar yang sudah ada */}
+                          <div className="flex flex-wrap gap-2">
+                            {(exp.images || (exp.image ? [exp.image] : [])).map((imgUrl, imgIdx) => (
+                              <div key={imgIdx} className="relative group/img">
+                                <img src={imgUrl} alt={`${exp.title}-${imgIdx}`} className="h-16 w-16 object-cover rounded-lg border border-gray-700" />
+                                <button onClick={() => {
+                                  const currentImages = exp.images || (exp.image ? [exp.image] : []);
+                                  const newImages = [...currentImages];
+                                  newImages.splice(imgIdx, 1);
+                                  handleArrayChange('experiences', index, 'images', newImages);
+                                }} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover/img:opacity-100 shadow-lg"><Trash2 size={12}/></button>
+                              </div>
+                            ))}
                           </div>
-                          
-                          <div>
-                            <p className="text-xs text-gray-500 mb-2">📁 Or Upload File (requires Vercel Blob)</p>
+
+                          {/* Opsi 1: Paste URL gambar */}
+                          <div className="bg-[#191919] border border-gray-700 rounded-lg p-3">
+                            <p className="text-xs text-green-400 font-bold mb-2">✅ Paste Image URL</p>
+                            <div className="flex gap-2">
+                              <input 
+                                type="text" 
+                                id={`exp-img-url-${index}`}
+                                placeholder="Paste image URL here"
+                                className="flex-1 bg-[#222] border border-gray-700 rounded-lg px-3 py-2 text-white text-sm"
+                              />
+                              <button 
+                                type="button"
+                                onClick={() => {
+                                  const input = document.getElementById(`exp-img-url-${index}`);
+                                  const url = input.value.trim();
+                                  if (url) {
+                                    const currentImages = exp.images || (exp.image ? [exp.image] : []);
+                                    handleArrayChange('experiences', index, 'images', [...currentImages, url]);
+                                    input.value = '';
+                                  }
+                                }}
+                                className="bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-2 rounded-lg text-sm transition-colors"
+                              >Add</button>
+                            </div>
+                          </div>
+
+                          {/* Opsi 2: Upload file */}
+                          <div className="bg-[#191919] border border-gray-700 rounded-lg p-3">
+                            <p className="text-xs text-gray-500 mb-2">📁 Or Upload Files (requires Vercel Blob)</p>
                             <input 
                               type="file" 
                               accept="image/*"
-                              onChange={(e) => handleFileUpload(e.target.files[0], (url) => handleArrayChange('experiences', index, 'image', url))}
+                              multiple
+                              onChange={async (e) => {
+                                const files = Array.from(e.target.files);
+                                const uploadedUrls = [];
+                                setSaveStatus("saving");
+                                for (const file of files) {
+                                  const formData = new FormData();
+                                  formData.append("file", file);
+                                  try {
+                                    const res = await fetch("/api/upload", { method: "POST", body: formData });
+                                    const json = await res.json();
+                                    if (json.url) uploadedUrls.push(json.url);
+                                    else { alert("Upload gagal: " + (json.error || 'Unknown error')); }
+                                  } catch (err) {
+                                    console.error(err);
+                                    alert("Upload error: " + err.message);
+                                  }
+                                }
+                                if (uploadedUrls.length > 0) {
+                                  const currentImages = exp.images || (exp.image ? [exp.image] : []);
+                                  const uniqueImages = Array.from(new Set([...currentImages, ...uploadedUrls]));
+                                  handleArrayChange('experiences', index, 'images', uniqueImages);
+                                  setSaveStatus("success");
+                                } else {
+                                  setSaveStatus("error");
+                                }
+                                setTimeout(() => setSaveStatus("idle"), 3000);
+                                e.target.value = "";
+                              }}
                               className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-purple-500 file:text-white hover:file:bg-purple-600 text-sm"
                             />
                           </div>
                         </div>
-                        {exp.image && <img src={exp.image} alt="preview" className="mt-2 h-24 rounded-lg border border-gray-700 object-cover" />}
                       </div>
                     </div>
                   </div>

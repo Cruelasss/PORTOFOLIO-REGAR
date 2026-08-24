@@ -238,9 +238,9 @@ export default async function Home() {
           <div className="grid gap-8">
             {(data.experiences || []).map((exp, i) => (
               <div key={i} className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-gray-800 hover:border-purple-500 transition-colors relative">
-                {exp.image && (
+                {((exp.images && exp.images.length > 0) || exp.image) && (
                   <div className="h-48 w-full relative">
-                    <img src={exp.image} alt={exp.title} className="w-full h-full object-cover" />
+                    <ProjectGallery images={exp.images && exp.images.length > 0 ? exp.images : (exp.image ? [exp.image] : [])} title={exp.title} />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent pointer-events-none"></div>
                   </div>
                 )}
