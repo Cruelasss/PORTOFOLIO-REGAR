@@ -320,11 +320,25 @@ export default function AdminDashboard() {
                         <input type="text" value={exp.link || ""} onChange={(e) => handleArrayChange('experiences', index, 'link', e.target.value)} placeholder="https://..." className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white" />
                       </div>
                       <div>
-                        <label className="block text-gray-400 mb-1"><ImagePlus size={14} className="inline mr-1" />Experience Image (Paste URL)</label>
-                        <div className="flex gap-2">
-                          <input type="text" value={exp.image || ""} onChange={(e) => handleArrayChange('experiences', index, 'image', e.target.value)} placeholder="Paste image URL here..." className="flex-1 bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white text-sm" />
+                        <label className="block text-gray-400 mb-1"><ImagePlus size={14} className="inline mr-1" />Experience Image</label>
+                        
+                        <div className="bg-[#191919] border border-gray-700 rounded-lg p-3 space-y-3">
+                          <div>
+                            <p className="text-xs text-green-400 font-bold mb-2">✅ Paste Image URL</p>
+                            <input type="text" value={exp.image || ""} onChange={(e) => handleArrayChange('experiences', index, 'image', e.target.value)} placeholder="Paste image URL here..." className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white text-sm" />
+                          </div>
+                          
+                          <div>
+                            <p className="text-xs text-gray-500 mb-2">📁 Or Upload File (requires Vercel Blob)</p>
+                            <input 
+                              type="file" 
+                              accept="image/*"
+                              onChange={(e) => handleFileUpload(e.target.files[0], (url) => handleArrayChange('experiences', index, 'image', url))}
+                              className="w-full bg-[#222] border border-gray-700 rounded-lg px-4 py-2 text-white file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-purple-500 file:text-white hover:file:bg-purple-600 text-sm"
+                            />
+                          </div>
                         </div>
-                        {exp.image && <img src={exp.image} alt="preview" className="mt-2 h-20 rounded-lg border border-gray-700 object-cover" />}
+                        {exp.image && <img src={exp.image} alt="preview" className="mt-2 h-24 rounded-lg border border-gray-700 object-cover" />}
                       </div>
                     </div>
                   </div>

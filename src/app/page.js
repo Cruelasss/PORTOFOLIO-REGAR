@@ -7,6 +7,25 @@ import ProjectGallery from '@/components/ProjectGallery';
 import { Mail, ExternalLink } from 'lucide-react';
 import { Github, Linkedin, Instagram } from '@/components/SocialIcons';
 
+const skillIcons = {
+  "Analytical thinking": "🔍",
+  "Problem solving": "🧩",
+  "Data analysis": "📊",
+  "Database design": "🗄️",
+  "Backend development": "⚙️",
+  "RESTful API development": "🌐",
+  "System integration": "🔗",
+  "Critical thinking": "🧠",
+  "Teamwork": "🤝",
+  "Leadership": "👑",
+  "Communication": "💬",
+  "Presentation": "📽️",
+  "Project management": "📅",
+  "Organizational skills": "📋",
+  "Time management": "⏱️",
+  "Adaptability": "🔄"
+};
+
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const fetchCache = 'force-no-store';
@@ -140,7 +159,7 @@ export default async function Home() {
                 <div className="flex flex-wrap justify-center gap-3 pt-2">
                   {(data.skills || []).map((skill, i) => (
                     <div key={i} className="bg-purple-50 text-purple-900 px-5 py-2.5 rounded-xl font-semibold shadow-sm border border-purple-200 text-sm hover:scale-105 transition-transform">
-                      🧠 {skill}
+                      {skillIcons[skill] || "🧠"} {skill}
                     </div>
                   ))}
                 </div>
